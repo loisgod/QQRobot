@@ -1,0 +1,27 @@
+server:
+  port: 8400
+  servlet:
+    context-path: /
+spring:
+  # DataSourceProperties
+  datasource:
+    url: jdbc:mysql://119.91.235.230:3306/qqrobot?characterEncoding=utf-8&useSSL=false&serverTimezone=Hongkong
+    username: root
+    password: haru4278
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      maximum-pool-size: 15
+      minimum-idle: 5
+      idle-timeout: 30000
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  mvc:
+    static-path-pattern: /**
+mybatis:
+  type-aliases-package: com.QQRobot.demo
+  mapper-locations: classpath:mapper/*.xml
+  configuration:
+    use-generated-keys: true
+    map-underscore-to-camel-case: true
+
+
+
