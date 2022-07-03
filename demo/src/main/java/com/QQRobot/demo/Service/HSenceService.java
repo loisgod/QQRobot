@@ -2,6 +2,7 @@ package com.QQRobot.demo.Service;
 
 import com.QQRobot.demo.Utils.ConstantUtil;
 import com.QQRobot.demo.Utils.CqUtil;
+import com.QQRobot.demo.Utils.DataUtil;
 import com.QQRobot.demo.dao.HScenceDataMapper;
 import com.QQRobot.demo.entity.HScenceData;
 import com.alibaba.fastjson.JSON;
@@ -23,7 +24,9 @@ public class HSenceService implements ConstantUtil {
     private String url = "http://localhost:5700/send_msg";
     private String path = "c:/images/HScence";
     @Autowired
-    HScenceDataMapper hScenceDataMapper;
+    private HScenceDataMapper hScenceDataMapper;
+    @Autowired
+    private CQService cqService;
 
     public boolean checkDoHScence(String message) {
         for(String s : doHScenceModel) {
@@ -50,8 +53,8 @@ public class HSenceService implements ConstantUtil {
         return false;
     }
 
-    public List<String []> doHScence(String message, Map<String ,Object> map) {
-        List<String []> Posts = new ArrayList<>();
+    public void doHScence(Map<String ,String > info) {
+        String message = info.get("message");
         String[] s = message.split(" ");
         int n;
         try{
@@ -63,55 +66,48 @@ public class HSenceService implements ConstantUtil {
         List<String > CQ = CqUtil.CQImageencoders(list);
         for(String string:CQ) {
             System.out.println("CQ" + string);
-            map.put("message",string);
-            Posts.add(new String[]{url,JSON.toJSONString(map)});
+            cqService.sendGroupMessage(info,string);
         }
-        return Posts;
     }
-    public List<String []> studyHScence(String message, Map<String,Object> map) {
-        List<String []> Posts = new ArrayList<>();
+    public void studyHScence(Map<String ,String > info) {
+        String message = info.get("message");
         if(message.equals("#添加瑟图") || message.equals("#添加涩图")) {
-            map.put("message",HSCENCE_ADD_INFO);
-            Posts.add(new String[]{url,JSON.toJSONString(map)});
-            return Posts;
+            cqService.sendGroupMessage(info,HSCENCE_ADD_INFO);
+            return ;
         }
-        List<String> finalPath = CqUtil.CQAllDownloardImage(message,path);
+        Map<String,Object> map = DataUtil.allCqDecoder(message);
+        List<String> finalPath = CqUtil.CQAllDownloardImage((List<String>) map.get("image"),path);
         int sucess_count = 0;
         for (String p:finalPath) {
             hScenceDataMapper.insertSHScenceData(new HScenceData(p));
             ++sucess_count;
         }
         if(sucess_count>0) {
-            map.put("message", sucess_count==1?"瑟图 get☆DAZE~":"get☆DAZE~ * " + sucess_count);
-            Posts.add(new String[]{url, JSON.toJSONString(map)});
+            cqService.sendGroupMessage(info,sucess_count==1?"瑟图 get☆DAZE~":"get☆DAZE~ * " + sucess_count);
         }
-        return Posts;
+        return ;
     }
-    public List<String []> superHScence(String message, Map<String,Object> map) {
-        List<String []> Posts = new ArrayList<>();
-        int sucess_count = 0;
-
-        if(message.contains("#")) {
-            map.put("message",HSCENCE_SUPER_ERROR_INFO);
-            Posts.add(new String[]{url, JSON.toJSONString(map)});
-        }
-        List<String> finalPath = CqUtil.CQAllDownloardImage(message,path);
-        for (String p:finalPath) {
-            hScenceDataMapper.insertSHScenceData(new HScenceData(p));
-            ++sucess_count;
-        }
-        if(sucess_count>0) {
-            map.put("message", sucess_count==1?"瑟图 get☆DAZE~":"get☆DAZE~ * " + sucess_count);
-            Posts.add(new String[]{url, JSON.toJSONString(map)});
-        }
-        return Posts;
-    }
-    public List<String []> intoSuperHScene(Map<String,Object> map) {
-        List<String []> Posts = new ArrayList<>();
-        map.put("message",HSCENCE_SUPER_INFO);
-        Posts.add(new String[]{url,JSON.toJSONString(map)});
-
-        return Posts;
+//    public List<String []> superHScence(String message, Map<String,Object> map) {
+//        List<String []> Posts = new ArrayList<>();
+//        int sucess_count = 0;
+//
+//        if(message.contains("#")) {
+//            map.put("message",HSCENCE_SUPER_ERROR_INFO);
+//            Posts.add(new String[]{url, JSON.toJSONString(map)});
+//        }
+//        List<String> finalPath = CqUtil.CQAllDownloardImage(message,path);
+//        for (String p:finalPath) {
+//            hScenceDataMapper.insertSHScenceData(new HScenceData(p));
+//            ++sucess_count;
+//        }
+//        if(sucess_count>0) {
+//            map.put("message", sucess_count==1?"瑟图 get☆DAZE~":"get☆DAZE~ * " + sucess_count);
+//            Posts.add(new String[]{url, JSON.toJSONString(map)});
+//        }
+//        return Posts;
+//    }
+    public void intoSuperHScene(Map<String,String > info) {
+        cqService.sendGroupMessage(info,HSCENCE_SUPER_INFO);
     }
     public List<String []> outSuperHScene(Map<String,Object> map) {
         List<String []> Posts = new ArrayList<>();
@@ -121,12 +117,9 @@ public class HSenceService implements ConstantUtil {
         return Posts;
     }
 
-    public List<String []> HScenceCounter(Map<String,Object> map) {
-        List<String []> Posts = new ArrayList<>();
-        map.put("message","当前库中的瑟图数量为：" + hScenceDataMapper.HScenceCounter());
-        Posts.add(new String[]{url,JSON.toJSONString(map)});
+    public void HScenceCounter(Map<String ,String > info) {
+        cqService.sendGroupMessage(info,"当前库中的瑟图数量为：" + hScenceDataMapper.HScenceCounter());
 
-        return Posts;
     }
 
 }

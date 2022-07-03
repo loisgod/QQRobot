@@ -16,12 +16,21 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
   mvc:
     static-path-pattern: /**
+  redis:
+    database: 10
+    host: 119.91.235.230
+    port: 6379
+    password: 1234
+  kafka:
+    bootstrap-servers: 119.91.235.230:9092
+    consumer:
+      group-id: test-consumer-group
+      enable-auto-commit: true
+      auto-commit-interval: 3000
 mybatis:
   type-aliases-package: com.QQRobot.demo
   mapper-locations: classpath:mapper/*.xml
   configuration:
     use-generated-keys: true
     map-underscore-to-camel-case: true
-
-
 

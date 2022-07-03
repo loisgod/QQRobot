@@ -2,6 +2,7 @@
 //
 //import com.QQRobot.demo.Utils.HttpRequestUtil;
 //import com.alibaba.fastjson.JSON;
+//import com.alibaba.fastjson.JSONObject;
 //import org.junit.jupiter.api.Test;
 //import org.springframework.boot.test.context.SpringBootTest;
 //import org.springframework.test.context.ContextConfiguration;
@@ -17,13 +18,16 @@
 //
 //    @Test
 //    public void PostTest() {
-//        String url = "http://localhost:5700/send_msg";
+//        String url = "http://localhost:5700/get_msg";
 //        map.put("message_type","group");
-//        map.put("group_id",588696648);
-//        map.put("message","[CQ:image,file=5d323f3594f75ff7901d3716846e1710.image,url=https://gchat.qpic.cn/gchatpic_new/308006378/869735393-2492793543-5D323F3594F75FF7901D3716846E1710/0?term=3,subType=1]");
-//        HttpRequestUtil.doPost(url,JSON.toJSONString(map));
-//
+//        map.put("group_id",869735393);
+//        map.put("message_id",-563013254);
+//        String res = HttpRequestUtil.doPost(url,JSON.toJSONString(map));
+//        JSONObject map = (JSONObject) JSON.parseObject(res,HashMap.class).get("data");
+//        System.out.println(map.get("message"));
 //    }
+//
+//
 //
 //    @Test
 //    public void DeleteTest() {

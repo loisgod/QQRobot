@@ -112,7 +112,7 @@ public class HttpRequestUtil {
     public static List<String> doPosts(List<String []> list) {
         List<String > res = new ArrayList<>();
         if(list==null || list.isEmpty()) {
-            return res;
+            return null;
         }
         for(String [] s : list) {
             System.out.println("outputingnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn" + s[0]+s[1]);
@@ -120,7 +120,6 @@ public class HttpRequestUtil {
         }
         return res;
     }
-
 
 
 }

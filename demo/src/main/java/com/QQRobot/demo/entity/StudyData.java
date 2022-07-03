@@ -18,13 +18,16 @@ public class StudyData {
     private Date createTime;
     private int crazy;
 
+    private int active;
+
 //    public StudyData(){}
-    public StudyData(String keyword,String content,String comeFrom,String teacher,int crazy,Date createTime) {
+    public StudyData(String keyword,String content,String comeFrom,String teacher,int crazy,Date createTime,int active) {
         this.keyword = keyword;
         this.content = content;
         this.comeFrom = comeFrom;
         this.teacher = teacher;
         this.crazy = crazy;
         this.createTime = createTime;
+        this.active = active;
     }
 }

@@ -3,8 +3,12 @@ package com.QQRobot.demo.Controller;
 import com.QQRobot.demo.Service.AutoReapeatService;
 import com.QQRobot.demo.Service.QQRobotService;
 import com.QQRobot.demo.Service.QQRobotServicelmpl;
+import com.QQRobot.demo.Utils.ConstantUtil;
 import com.QQRobot.demo.Utils.HttpRequestUtil;
+import com.QQRobot.demo.entity.Event;
+import com.QQRobot.demo.event.EventProducer;
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -16,16 +20,24 @@ import java.util.Map;
 
 @RestController
 @Slf4j
-public class QQRobotController {
+public class QQRobotController implements ConstantUtil {
 
     @Resource
     private QQRobotService robotService;
+    @Autowired
+    private EventProducer eventProducer;
 
 
     @PostMapping
     public void QqRobotEven(HttpServletRequest request){
         System.out.println("POST" + request);
-        robotService.QQRobotEvenHandle(request);
+        JSONObject jsonParam = robotService.getJSONParam(request);
+//        robotService.QQRobotEvenHandle(request);
+//        robotService.QQRobotEvenHandle(jsonParam);
+        Event event =  new Event();
+        event.setTopic(TOPIC_SERVICE)
+                .setJson(jsonParam);
+        eventProducer.fireEvent(event);
     }
     @GetMapping
     @ResponseBody

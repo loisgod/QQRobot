@@ -5,19 +5,17 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
-public class RememberData {
+public class ConfigData {
     private int id;
     private String keyword;
     private String content;
     private String comeFrom;
-    private String userId;
     private Date createTime;
 
-    public RememberData(String keyword,String content,String comeFrom,String userId) {
+    public ConfigData(String keyword, String content, String comeFrom) {
         this.keyword = keyword;
         this.content = content;
         this.comeFrom = comeFrom;
-        this.userId = userId;
         this.createTime = new Date();
     }
 }

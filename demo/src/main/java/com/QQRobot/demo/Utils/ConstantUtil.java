@@ -18,7 +18,8 @@ public interface ConstantUtil {
     String HELP_INFO = "功能介绍：\n" +
             "#学习 \n" +
             "#快速学习\n" +
-            "#添加瑟(涩)图" +
+            "#口住\n" +
+            "#添加瑟(涩)图\n" +
             "#瑟(涩)图or#来张瑟(涩)图[空格]所需数量[可选,默认为1]\n" +
             "#瑟(涩)图鸿儒\n" +
             "#瑟图总数";
@@ -31,5 +32,29 @@ public interface ConstantUtil {
             "输入 \"#贤者模式\"以退出鸿儒模式";
     String HSCENCE_SUPER_OUT = "\"呼~~~~(意味深)\"机器人酱如此说道，标志着您的鸿儒已经结束";
     String HSCENCE_NO_FOUND = "瑟图模块正在维护，请稍后";
+    String LOCK_INFO = "#口住/#lock[空格]关键词[空格]自动回复内容\n" +
+            "封印某一句自动回复的内容\n" +
+            "#拔出/#unlock/#啵[空格]关键词[空格]自动回复内容\n" +
+            "解除某句封印\n" +
+            "自动回复内容为\"*\"时代表全部封印/全部解除";
+    String LOCK_NULL = "卟噗噗噗，没有的东西口不住啦~~";
+    String UNLOCK_NULL = "嗯？(歪头看)";
+    String LOCK_SUCCESS ="唔~~~嗯~~~唔！！唔！！";
+    String UNLOCK_SUCCESS ="咳...咳咳咳噗噗咳....呼~~";
+    String KATCHA_RESET = "逊诶";
+    String KATCHA_ADD = "添加成功";
+    String KATCHA_REMOVE = "删除成功";
+    String DEFAULT_SSR = "常驻五星";
+    String DEFAULT_UP_SSR = "UP五星";
+    String DEFAULT_SR = "四星";
+    String DEFAULT_R = "三星";
     int HSCENCE_INSERT = 10;
+    int GET_R = 1;
+    int GET_SR = 2;
+    int GET_SSR = 3;
+    int GET_UP_SSR = 4;
+    int REDIS_LIST_MAX_SIZE = 100;
+    String TOPIC_SEND = "qqrobotSender";
+    String TOPIC_SERVICE = "qqrobotService";
+
 }
